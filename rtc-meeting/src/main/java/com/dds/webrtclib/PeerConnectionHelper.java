@@ -558,6 +558,7 @@ public class PeerConnectionHelper {
 
         @Override
         public void onAddStream(MediaStream mediaStream) {
+            Log.e(TAG, "onAddStream");
             if (viewCallback != null) {
                 viewCallback.onAddRemoteStream(mediaStream, socketId);
             }
@@ -595,7 +596,7 @@ public class PeerConnectionHelper {
 
         @Override
         public void onCreateSuccess(SessionDescription origSdp) {
-            Log.v(TAG, "sdp创建成功       " + origSdp.type);
+            Log.e(TAG, "sdp创建成功       " + origSdp.type);
             //设置本地的SDP
 
             String sdpDescription = origSdp.description;

@@ -57,7 +57,7 @@ import java.util.regex.Pattern;
 
 public class PeerConnectionHelper {
 
-    public final static String TAG = "dds_webRtcHelper";
+    public final static String TAG = "zrzr";
 
     public static final int VIDEO_RESOLUTION_WIDTH = 320;
     public static final int VIDEO_RESOLUTION_HEIGHT = 240;
@@ -611,7 +611,7 @@ public class PeerConnectionHelper {
 
         @Override
         public void onSetSuccess() {
-            Log.v(TAG, "sdp连接成功        " + pc.signalingState().toString());
+            Log.e(TAG, "sdp连接成功        " + pc.signalingState().toString());
 
             if (pc.signalingState() == PeerConnection.SignalingState.HAVE_REMOTE_OFFER) {
                 pc.createAnswer(Peer.this, offerOrAnswerConstraint());

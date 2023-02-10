@@ -35,7 +35,7 @@ import javax.net.ssl.X509TrustManager;
  */
 public class JavaWebSocket implements IWebSocket {
 
-    private final static String TAG = "dds_JavaWebSocket";
+    private final static String TAG = "zrzr";
 
     private WebSocketClient mWebSocketClient;
 
@@ -67,7 +67,7 @@ public class JavaWebSocket implements IWebSocket {
                 @Override
                 public void onMessage(String message) {
                     isOpen = true;
-                    Log.d(TAG, message);
+                    Log.e(TAG, message);
                     handleMessage(message);
                 }
 
@@ -138,7 +138,7 @@ public class JavaWebSocket implements IWebSocket {
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         final String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
+        Log.e(TAG, "send-->" + jsonString);
         mWebSocketClient.send(jsonString);
     }
 
@@ -154,7 +154,7 @@ public class JavaWebSocket implements IWebSocket {
         map.put("data", childMap2);
         JSONObject object = new JSONObject(map);
         String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
+        Log.e(TAG, "send answer-->" + jsonString);
         mWebSocketClient.send(jsonString);
     }
 
@@ -174,7 +174,7 @@ public class JavaWebSocket implements IWebSocket {
 
         JSONObject object = new JSONObject(map);
         String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
+        Log.e(TAG, "send offer-->" + jsonString);
         mWebSocketClient.send(jsonString);
 
     }
@@ -190,7 +190,7 @@ public class JavaWebSocket implements IWebSocket {
         map.put("data", childMap);
         JSONObject object = new JSONObject(map);
         String jsonString = object.toString();
-        Log.d(TAG, "send-->" + jsonString);
+        Log.e(TAG, "send ice-->" + jsonString);
         mWebSocketClient.send(jsonString);
     }
     //============================需要发送的=====================================

@@ -184,6 +184,7 @@ public class WebRTCManager implements ISignalingEvents {
 
     @Override
     public void onRemoteIceCandidate(String socketId, IceCandidate iceCandidate) {
+        Log.e("zrzr", "onRemoteIceCandidate");
         handler.post(() -> {
             if (_peerHelper != null) {
                 _peerHelper.onRemoteIceCandidate(socketId, iceCandidate);
@@ -214,6 +215,7 @@ public class WebRTCManager implements ISignalingEvents {
 
     @Override
     public void onReceiveOffer(String socketId, String sdp) {
+        Log.e("zrzr", "onReceiveOffer");
         handler.post(() -> {
             if (_peerHelper != null) {
                 _peerHelper.onReceiveOffer(socketId, sdp);
@@ -224,6 +226,7 @@ public class WebRTCManager implements ISignalingEvents {
 
     @Override
     public void onReceiverAnswer(String socketId, String sdp) {
+        Log.e("zrzr", "onReceiverAnswer");
         handler.post(() -> {
             if (_peerHelper != null) {
                 _peerHelper.onReceiverAnswer(socketId, sdp);

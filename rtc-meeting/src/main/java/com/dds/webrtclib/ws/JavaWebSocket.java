@@ -256,7 +256,8 @@ public class JavaWebSocket implements IWebSocket {
                 Log.e("zrzr", "callStatus = " + callStatus);
                 //接通
                 if("ANSWER".equals(callStatus)) {
-                    handleJoinToRoom(connectId, offerId);
+                    String answerId = jsonObject.getString("answerId");
+                    handleJoinToRoom(answerId, offerId);
                 }
             }
 
@@ -266,10 +267,10 @@ public class JavaWebSocket implements IWebSocket {
                 Map map = JSON.parseObject(message, Map.class);
                 Map desc = (Map) map.get("description");
                 String sdp = (String) desc.get("sdp");
-
+                String answerId = jsonObject.getString("answerId");
                 Log.e("aaaaa", "answer answer = " + message);
 
-                events.onReceiverAnswer(connectId, sdp);
+                events.onReceiverAnswer(answerId, sdp);
             }
 
             if(jsonObject.getString("type") != null
@@ -277,8 +278,8 @@ public class JavaWebSocket implements IWebSocket {
 
                 Map map = JSON.parseObject(message, Map.class);
                 IceCandidate iceCandidate = jsonObject.getObject("candidate", IceCandidate.class);
-
-                events.onRemoteIceCandidate(connectId, iceCandidate);
+                String answerId = jsonObject.getString("answerId");
+                events.onRemoteIceCandidate(answerId, iceCandidate);
             }
 
         } catch (JSONException e) {
@@ -304,7 +305,7 @@ public class JavaWebSocket implements IWebSocket {
     }
 
     private void handleJoinToRoom(String connectId, String offerId) {
-        Log.e("zrzr", "handleJoinToRoom");
+        Log.e("zrzr", "handleJoinToRoom = " + connectId);
         ArrayList<String> connections = new ArrayList<>();
         connections.add(connectId);
         events.onJoinToRoom(connections, offerId);

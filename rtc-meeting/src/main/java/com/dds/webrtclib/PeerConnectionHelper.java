@@ -185,6 +185,7 @@ public class PeerConnectionHelper {
         executor.execute(() -> {
             Peer peer = _connectionPeerDic.get(socketId);
             if (peer != null) {
+                Log.e("zrzr", "peer onRemoteIceCandidate");
                 peer.pc.addIceCandidate(iceCandidate);
             }
         });
@@ -193,7 +194,7 @@ public class PeerConnectionHelper {
 
     public void onRemoteIceCandidateRemove(String socketId, List<IceCandidate> iceCandidates) {
         // todo 移除
-        executor.execute(() -> Log.d(TAG, "send onRemoteIceCandidateRemove"));
+        executor.execute(() -> Log.e(TAG, "send onRemoteIceCandidateRemove"));
 
     }
 
@@ -225,6 +226,7 @@ public class PeerConnectionHelper {
             Peer mPeer = _connectionPeerDic.get(socketId);
             SessionDescription sessionDescription = new SessionDescription(SessionDescription.Type.ANSWER, sdp);
             if (mPeer != null) {
+                Log.e("zrzr", "peer onReceiverAnswer");
                 mPeer.pc.setRemoteDescription(mPeer, sessionDescription);
             }
         });
@@ -308,7 +310,7 @@ public class PeerConnectionHelper {
 
     // 为所有连接添加流
     private void addStreams() {
-        Log.v(TAG, "为所有连接添加流");
+        Log.e(TAG, "为所有连接添加流");
         for (Map.Entry<String, Peer> entry : _connectionPeerDic.entrySet()) {
             if (_localStream == null) {
                 createLocalStream();
@@ -357,7 +359,7 @@ public class PeerConnectionHelper {
             CameraVideoCapturer cameraVideoCapturer = (CameraVideoCapturer) captureAndroid;
             cameraVideoCapturer.switchCamera(null);
         } else {
-            Log.d(TAG, "Will not switch camera, video caputurer is not a camera");
+            Log.e(TAG, "Will not switch camera, video caputurer is not a camera");
         }
 
     }
@@ -519,28 +521,28 @@ public class PeerConnectionHelper {
         //****************************PeerConnection.Observer****************************/
         @Override
         public void onSignalingChange(PeerConnection.SignalingState signalingState) {
-            Log.i(TAG, "onSignalingChange: " + signalingState);
+            Log.e(TAG, "onSignalingChange: " + signalingState);
         }
 
         @Override
         public void onIceConnectionChange(PeerConnection.IceConnectionState iceConnectionState) {
-            Log.i(TAG, "onIceConnectionChange: " + iceConnectionState.toString());
+            Log.e(TAG, "onIceConnectionChange: " + iceConnectionState.toString());
         }
 
         @Override
         public void onConnectionChange(PeerConnection.PeerConnectionState newState) {
-            Log.i(TAG, "onConnectionChange: " + newState.toString());
+            Log.e(TAG, "onConnectionChange: " + newState.toString());
         }
 
         @Override
         public void onIceConnectionReceivingChange(boolean b) {
-            Log.i(TAG, "onIceConnectionReceivingChange:" + b);
+            Log.e(TAG, "onIceConnectionReceivingChange:" + b);
 
         }
 
         @Override
         public void onIceGatheringChange(PeerConnection.IceGatheringState iceGatheringState) {
-            Log.i(TAG, "onIceGatheringChange:" + iceGatheringState.toString());
+            Log.e(TAG, "onIceGatheringChange:" + iceGatheringState.toString());
 
         }
 
@@ -553,7 +555,7 @@ public class PeerConnectionHelper {
 
         @Override
         public void onIceCandidatesRemoved(IceCandidate[] iceCandidates) {
-            Log.i(TAG, "onIceCandidatesRemoved:");
+            Log.e(TAG, "onIceCandidatesRemoved:");
         }
 
         @Override
@@ -583,12 +585,12 @@ public class PeerConnectionHelper {
 
         @Override
         public void onAddTrack(RtpReceiver receiver, MediaStream[] mediaStreams) {
-
+            Log.e("zrzr", "onAddTrack");
         }
 
         @Override
         public void onTrack(RtpTransceiver transceiver) {
-
+            Log.e("zrzr", "onTrack");
         }
 
 
@@ -666,7 +668,7 @@ public class PeerConnectionHelper {
         final String[] lines = sdpDescription.split("\r\n");
         final int mLineIndex = findMediaDescriptionLine(isAudio, lines);
         if (mLineIndex == -1) {
-            Log.w(TAG, "No mediaDescription line, so can't prefer " + codec);
+            Log.e(TAG, "No mediaDescription line, so can't prefer " + codec);
             return sdpDescription;
         }
         // A list with all the payload types with name |codec|. The payload types are integers in the
@@ -681,7 +683,7 @@ public class PeerConnectionHelper {
             }
         }
         if (codecPayloadTypes.isEmpty()) {
-            Log.w(TAG, "No payload types with name " + codec);
+            Log.e(TAG, "No payload types with name " + codec);
             return sdpDescription;
         }
 
@@ -689,7 +691,7 @@ public class PeerConnectionHelper {
         if (newMLine == null) {
             return sdpDescription;
         }
-        Log.d(TAG, "Change media description from: " + lines[mLineIndex] + " to " + newMLine);
+        Log.e(TAG, "Change media description from: " + lines[mLineIndex] + " to " + newMLine);
         lines[mLineIndex] = newMLine;
         return joinString(Arrays.asList(lines), "\r\n", true /* delimiterAtEnd */);
     }

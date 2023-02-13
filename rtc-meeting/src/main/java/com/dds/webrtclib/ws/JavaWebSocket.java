@@ -152,6 +152,16 @@ public class JavaWebSocket implements IWebSocket {
         final String jsonString1 = object1.toString();
         Log.e(TAG, "send pre-->" + jsonString1);
         mWebSocketClient.send(jsonString1);
+
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("eventName", "__join");
+//        Map<String, String> childMap = new HashMap<>();
+//        childMap.put("room", room);
+//        map.put("data", childMap);
+//        JSONObject object = new JSONObject(map);
+//        final String jsonString = object.toString();
+//        Log.e(TAG, "send join-->" + jsonString);
+//        mWebSocketClient.send(jsonString);
     }
 
     public void sendAnswer(String socketId, String sdp) {
@@ -187,6 +197,23 @@ public class JavaWebSocket implements IWebSocket {
         Log.e(TAG, "send offer-->" + jsonString);
 
         mWebSocketClient.send(jsonString);
+
+//        HashMap<String, Object> childMap1 = new HashMap();
+//        childMap1.put("type", "offer");
+//        childMap1.put("sdp", sdp);
+//
+//        HashMap<String, Object> childMap2 = new HashMap();
+//        childMap2.put("socketId", socketId);
+//        childMap2.put("sdp", childMap1);
+//
+//        HashMap<String, Object> map = new HashMap();
+//        map.put("eventName", "__offer");
+//        map.put("data", childMap2);
+//
+//        JSONObject object = new JSONObject(map);
+//        String jsonString = object.toString();
+//        Log.e(TAG, "send offer-->" + jsonString);
+//        mWebSocketClient.send(jsonString);
     }
 
     public void sendIceCandidate(String socketId, IceCandidate iceCandidate) {
@@ -201,6 +228,19 @@ public class JavaWebSocket implements IWebSocket {
         Log.e(TAG, "send ice-->" + jsonString);
 
         mWebSocketClient.send(jsonString);
+
+//        HashMap<String, Object> childMap = new HashMap();
+//        childMap.put("id", iceCandidate.sdpMid);
+//        childMap.put("label", iceCandidate.sdpMLineIndex);
+//        childMap.put("candidate", iceCandidate.sdp);
+//        childMap.put("socketId", socketId);
+//        HashMap<String, Object> map = new HashMap();
+//        map.put("eventName", "__ice_candidate");
+//        map.put("data", childMap);
+//        JSONObject object = new JSONObject(map);
+//        String jsonString = object.toString();
+//        Log.e(TAG, "send ice-->" + jsonString);
+//        mWebSocketClient.send(jsonString);
     }
     //============================需要发送的=====================================
 
@@ -268,7 +308,6 @@ public class JavaWebSocket implements IWebSocket {
                 Map desc = (Map) map.get("description");
                 String sdp = (String) desc.get("sdp");
                 String answerId = jsonObject.getString("answerId");
-                Log.e("aaaaa", "answer answer = " + message);
 
                 events.onReceiverAnswer(answerId, sdp);
             }
@@ -277,8 +316,16 @@ public class JavaWebSocket implements IWebSocket {
                     && "ICE".equals(jsonObject.getString("type"))) {
 
                 Map map = JSON.parseObject(message, Map.class);
-                IceCandidate iceCandidate = jsonObject.getObject("candidate", IceCandidate.class);
-                String answerId = jsonObject.getString("answerId");
+                Map ice = (Map) map.get("candidate");
+                String sdpMid = (String) ice.get("sdpMid");
+                String candidate = (String) ice.get("candidate");
+                int sdpMLineIndex = (int) ice.get("sdpMLineIndex");
+                IceCandidate iceCandidate = new IceCandidate(sdpMid, sdpMLineIndex, candidate);
+
+                String answerId = jsonObject.getString("fromId");
+
+//                IceCandidate iceCandidate = jsonObject.getObject("candidate", IceCandidate.class);
+
                 events.onRemoteIceCandidate(answerId, iceCandidate);
             }
 

@@ -37,7 +37,7 @@ public class NodejsActivity extends AppCompatActivity {
 
     private void initVar() {
         et_signal.setText("wss://rpc.stdlnj.cn/wst");//wss://rpc.stdlnj.cn/wst   wss://rpc.stdlnj.cn/android/7
-        et_room.setText("123456");
+        et_room.setText("111");
     }
 
     /*-------------------------- nodejs版本服务器测试--------------------------------------------*/
